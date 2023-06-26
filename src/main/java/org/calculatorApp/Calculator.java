@@ -19,28 +19,18 @@ public class Calculator {
     }
 
     synchronized public void compute(
-            String methodName, Integer commandIdThis
-    ) throws NoSuchMethodException, IllegalAccessException, InvocationTargetException {
-        Method method = handler.getDeclaredMethod(methodName);
-        results.set(commandIdThis, (Double) method.invoke(handlerInstance));
-        notifyAll();
-    }
-
-    synchronized public void compute( // Мб немного перенести sync, чтобы получения методов и создания массивов находились вне него
-            String methodName, Integer commandIdThis, Integer commandId1, Integer commandId2
+            String methodName, Integer commandIdThis, List<Integer> commandIds
     ) throws InterruptedException, NoSuchMethodException, IllegalAccessException, InvocationTargetException {
-        Double[] args = new Double[2];
-        while (results.get(commandId1) == null) {
-            wait();
+        Double[] args = new Double[commandIds.size()];
+        Class<?>[] argTypes = new Class[commandIds.size()];
+        for (int i = 0; i < commandIds.size(); ++i) {
+            Integer commandId = commandIds.get(i);
+            while (results.get(commandId) == null) {
+                wait();
+            }
+            args[i] = results.get(commandId);
+            argTypes[i] = Double.class;
         }
-        args[0] = results.get(commandId1);
-        while (results.get(commandId2) == null) {
-            wait();
-        }
-        args[1] = results.get(commandId2);
-        Class<?>[] argTypes = new Class[2];
-        argTypes[0] = Double.class;
-        argTypes[1] = Double.class;
         Method method = handler.getDeclaredMethod(methodName, argTypes);
         results.set(commandIdThis, (Double) method.invoke(handlerInstance, (Object[]) args));
         notifyAll();

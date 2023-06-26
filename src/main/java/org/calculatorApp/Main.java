@@ -3,6 +3,7 @@ package org.calculatorApp;
 import java.io.*;
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -18,10 +19,10 @@ public class Main {
         // Creating ThreadPool and FileReader
 
         try (
-            ExecutorService executorService = Executors.newCachedThreadPool();
             FileReader fileReader = new FileReader(args[0]);
             BufferedReader bufferedReader = new BufferedReader(fileReader)
         ) {
+            ExecutorService executorService = Executors.newCachedThreadPool();
 
             // Reading first line
 
@@ -48,13 +49,10 @@ public class Main {
             // Parsing commands and creating threads for each
             for (int i = 0; i < commands.size(); ++i) {
                 String[] splitted = commands.get(i).split(",");
-                CalculationThread calculationThread;
-                // Creating thread depending on num parameters needed (0 or 2)
-                if (splitted.length == 1) {
-                    calculationThread = new CalculationThread(splitted[0], i, calculator);
-                } else {
-                    calculationThread = new CalculationThread(splitted[0], i, Integer.parseInt(splitted[1]), Integer.parseInt(splitted[2]), calculator);
-                }
+                String method = splitted[0];
+                String[] paramstrings = Arrays.copyOfRange(splitted, 1, splitted.length);
+                List<Integer> params = Arrays.stream(paramstrings).mapToInt(Integer::parseInt).boxed().toList();
+                CalculationThread calculationThread = new CalculationThread(method, i, params, calculator);
                 // Running created thread
                 executorService.submit(calculationThread);
             }
@@ -68,7 +66,7 @@ public class Main {
             }
 
             // Just to make sure each command worked
-            //System.out.println(calculator.getResults());
+            System.out.println(calculator.getResults());
             // Printing final result
             System.out.println(calculator.getResult(command_id));
 
