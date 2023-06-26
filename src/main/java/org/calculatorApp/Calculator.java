@@ -19,12 +19,12 @@ public class Calculator {
     }
 
     synchronized public void compute(
-            String methodName, Integer commandIdThis, List<Integer> commandIds
+            String methodName, int commandIdThis, int[] commandIds
     ) throws InterruptedException, NoSuchMethodException, IllegalAccessException, InvocationTargetException {
-        Double[] args = new Double[commandIds.size()];
-        Class<?>[] argTypes = new Class[commandIds.size()];
-        for (int i = 0; i < commandIds.size(); ++i) {
-            Integer commandId = commandIds.get(i);
+        Double[] args = new Double[commandIds.length];
+        Class<?>[] argTypes = new Class[commandIds.length];
+        for (int i = 0; i < commandIds.length; ++i) {
+            int commandId = commandIds[i];
             while (results.get(commandId) == null) {
                 wait();
             }

@@ -1,16 +1,15 @@
 package org.calculatorApp;
 
 import java.lang.reflect.InvocationTargetException;
-import java.util.List;
 
 public class CalculationThread extends Thread {
     private final String method;
-    private final Integer commandIdThis;
-    private final List<Integer> commandIds;
+    private final int commandIdThis;
+    private final int[] commandIds;
 
     private final Calculator calculator;
 
-    public CalculationThread(String method, Integer commandIdThis, List<Integer> commandIds, Calculator calculator) {
+    public CalculationThread(String method, int commandIdThis, int[] commandIds, Calculator calculator) {
         this.method = method;
         this.commandIdThis = commandIdThis;
         this.commandIds = commandIds;

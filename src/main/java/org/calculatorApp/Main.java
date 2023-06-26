@@ -20,9 +20,9 @@ public class Main {
 
         try (
             FileReader fileReader = new FileReader(args[0]);
-            BufferedReader bufferedReader = new BufferedReader(fileReader)
+            BufferedReader bufferedReader = new BufferedReader(fileReader);
+            ExecutorService executorService = Executors.newCachedThreadPool()
         ) {
-            ExecutorService executorService = Executors.newCachedThreadPool();
 
             // Reading first line
 
@@ -51,7 +51,7 @@ public class Main {
                 String[] splitted = commands.get(i).split(",");
                 String method = splitted[0];
                 String[] paramstrings = Arrays.copyOfRange(splitted, 1, splitted.length);
-                List<Integer> params = Arrays.stream(paramstrings).mapToInt(Integer::parseInt).boxed().toList();
+                int[] params = Arrays.stream(paramstrings).mapToInt(Integer::parseInt).toArray();
                 CalculationThread calculationThread = new CalculationThread(method, i, params, calculator);
                 // Running created thread
                 executorService.submit(calculationThread);
@@ -66,7 +66,7 @@ public class Main {
             }
 
             // Just to make sure each command worked
-            System.out.println(calculator.getResults());
+            //System.out.println(calculator.getResults());
             // Printing final result
             System.out.println(calculator.getResult(command_id));
 
