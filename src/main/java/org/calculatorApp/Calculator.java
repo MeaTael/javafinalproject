@@ -43,6 +43,7 @@ public class Calculator {
         argTypes[1] = Double.class;
         Method method = handler.getDeclaredMethod(methodName, argTypes);
         results.set(commandIdThis, (Double) method.invoke(handlerInstance, (Object[]) args));
+        notifyAll();
     }
 
     public List<Double> getResults() {
