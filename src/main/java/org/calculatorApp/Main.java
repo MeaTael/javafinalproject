@@ -12,6 +12,11 @@ import java.util.concurrent.TimeUnit;
 public class Main {
     public static void main(String[] args) throws IOException, InterruptedException {
 
+        if (args.length != 1 && (args.length != 2 || !args[1].equals("debug"))) {
+            System.out.println("No input file given");
+            return;
+        }
+
         String str;
         String class_fqcn;
         int command_id;
@@ -66,7 +71,9 @@ public class Main {
             }
 
             // Just to make sure each command worked
-            //System.out.println(calculator.getResults());
+            if (args.length == 2) {
+                System.out.println(calculator.getResults());
+            }
             // Printing final result
             System.out.println(calculator.getResult(command_id));
 
