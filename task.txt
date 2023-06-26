@@ -1,0 +1,6 @@
+handlers.basicHandler,4
+rnd
+rnd
+mul,0,1
+rnd
+sum,2,3
