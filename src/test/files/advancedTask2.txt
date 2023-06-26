@@ -1,0 +1,10 @@
+handlers.advancedHandler,0
+sqrt,1
+abs,2
+sub,3,7
+sub,4,5
+zero
+sqr,6
+three
+sqr,8
+four

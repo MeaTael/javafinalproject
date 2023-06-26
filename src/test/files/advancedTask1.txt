@@ -1,0 +1,10 @@
+handlers.advancedHandler,8
+one
+two
+sum,0,1
+three
+five
+sub,3,4
+mul,2,5
+four
+div,6,7
