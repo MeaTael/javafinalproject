@@ -53,6 +53,19 @@ public class TestMain {
             assertEquals(expected, Double.valueOf(outputStream.toString()));
         }
 
+        @Test
+        @Order(4)
+        @DisplayName("Test division by zero breaks nothing")
+        public void testDivisionByZero() throws IOException, InterruptedException {
+            String[] params = new String[1];
+            params[0] = "src/test/files/basicTask3.txt"; // 1 / 0
+            Double expected = 1.0 / 0;
+            ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+            System.setOut(new PrintStream(outputStream));
+            Main.main(params);
+            assertEquals(expected, Double.valueOf(outputStream.toString()));
+        }
+
     }
 
     @Nested
