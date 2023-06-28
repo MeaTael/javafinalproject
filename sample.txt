@@ -1,0 +1,14 @@
+handlers.advancedHandler,0
+acos,1
+div,2,3
+one
+sum,4,5
+sum,6,7
+sqr,8
+sqr,9
+sqr,10
+tg,12
+sin,11
+cos,11
+three
+four
